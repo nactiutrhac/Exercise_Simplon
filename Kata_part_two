@@ -37,4 +37,4 @@ turnOn(351, 678, 951, 908)
 toggle(720, 196, 897, 994)
 toggle(831, 394, 904, 860)
 
-print("Number of lights lit: ", countLightsOn())
+print("Total brightness of all lights combined is: ", countLightsOn())
