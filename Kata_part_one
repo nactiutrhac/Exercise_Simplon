@@ -4,55 +4,37 @@ grid = []
 for i in range(SIZE):
     grid.append([False] * SIZE)
 
-instructions = [
-    "turn on 887,9 through 959,629",
-    "turn on 454,398 through 844,448",
-    "turn off 539,243 through 559,965",
-    "turn off 370,819 through 676,868",
-    "turn off 145,40 through 370,997",
-    "turn off 301,3 through 808,453",
-    "turn on 351,678 through 951,908",
-    "toggle 720,196 through 897,994",
-    "toggle 831,394 through 904,860",
-]
+def turnOn(x1, y1, x2, y2):
+    for i in range(x1, x2 + 1):
+        for j in range(y1, y2 + 1):
+            grid[i][j] = True
 
-def apply_instruction(grid, line):
-    if line.startswith("turn on"):
-        op = "on"
-        rest = line[len("turn on "):]
-    elif line.startswith("turn off"):
-        op = "off"
-        rest = line[len("turn off "):]
-    elif line.startswith("toggle"):
-        op = "toggle"
-        rest = line[len("toggle "):]
-    else:
-        raise ValueError(f"Unknown instruction: {line}")
+def turnOff(x1, y1, x2, y2):
+    for i in range(x1, x2 + 1):
+        for j in range(y1, y2 + 1):
+            grid[i][j] = False
 
-    part1, part2 = rest.split(" through ")
-    x1, y1 = map(int, part1.split(","))
-    x2, y2 = map(int, part2.split(","))
+def toggle(x1, y1, x2, y2):
+    for i in range(x1, x2 + 1):
+        for j in range(y1, y2 + 1):
+            grid[i][j] = not grid[i][j]
 
-    if x1 > x2:
-        x1, x2 = x2, x1
-    if y1 > y2:
-        y1, y2 = y2, y1
+def countLightsOn():
+    count = 0
+    for i in range(SIZE):
+        for j in range(SIZE):
+            if grid[i][j]:
+                count += 1
+    return count
 
-    for x in range(x1, x2 + 1):
-        row = grid[x]
-        if op == "on":
-            for y in range(y1, y2 + 1):
-                row[y] = True
-        elif op == "off":
-            for y in range(y1, y2 + 1):
-                row[y] = False
-        elif op == "toggle":
-            for y in range(y1, y2 + 1):
-                row[y] = not row[y]
+turnOn(887, 9, 959, 629)
+turnOn(454, 398, 844, 448)
+turnOff(539, 243, 559, 965)
+turnOff(370, 819, 676, 868)
+turnOff(145, 40, 370, 997)
+turnOff(301, 3, 808, 453)
+turnOn(351, 678, 951, 908)
+toggle(720, 196, 897, 994)
+toggle(831, 394, 904, 860)
 
-for line in instructions:
-    apply_instruction(grid, line)
-
-lit_count = sum(1 for row in grid for val in row if val)
-
-print("Number of lights lit:", lit_count)
+print("Number of lights lit: ", countLightsOn())
