@@ -1,0 +1,40 @@
+SIZE = 1000
+
+grid = []
+for i in range(SIZE):
+    grid.append([0] * SIZE)
+
+def turnOn(x1, y1, x2, y2):
+    for i in range(x1, x2 + 1):
+        for j in range(y1, y2 + 1):
+            grid[i][j] += 1
+
+def turnOff(x1, y1, x2, y2):
+    for i in range(x1, x2 + 1):
+        for j in range(y1, y2 + 1):
+            if grid[i][j] >= 0:
+                grid[i][j] -= 1
+
+def toggle(x1, y1, x2, y2):
+    for i in range(x1, x2 + 1):
+        for j in range(y1, y2 + 1):
+            grid[i][j] += 2
+
+def countLightsOn():
+    count = 0
+    for i in range(SIZE):
+        for j in range(SIZE):
+            count = count + grid[i][j] 
+    return count
+
+turnOn(887, 9, 959, 629)
+turnOn(454, 398, 844, 448)
+turnOff(539, 243, 559, 965)
+turnOff(370, 819, 676, 868)
+turnOff(145, 40, 370, 997)
+turnOff(301, 3, 808, 453)
+turnOn(351, 678, 951, 908)
+toggle(720, 196, 897, 994)
+toggle(831, 394, 904, 860)
+
+print("Number of lights lit: ", countLightsOn())
